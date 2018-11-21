@@ -1,6 +1,7 @@
 import csv
 import numpy as np
 import operator
+import matplotlib.pyplot as plt
 
 
 list_of_cities =[]
@@ -16,7 +17,7 @@ NodeName_3, x_3, y_3
 NodeName_n, x_n, y_n
 '''
 csv_cities = True
-csv_name = 'C:/Users/cheolhwanOh/Desktop/2018.fall/메타휴리스틱/유전알고리즘tsp/city_data.csv'
+csv_name = 'C:/python/meta_Heuristics/ALL_tsp/bayg29.csv'
 
 
 #class___1, 개미 군체 최적화법을 사용하기위한 infra
@@ -280,6 +281,7 @@ class ACO:
         # =============================================================================
         # =============================================================================   
         
+        self.history_of_bestLength = []
         best_length = np.inf
         for epoch in range(self.total_epochs):  
           
@@ -489,7 +491,7 @@ class ACO:
                 history_ant.append(ant)
                 history_ant_index.append(ant_index)
                 history_length.append(sum(ant_length))
-                
+                  
 
             
             #여기까지가 한마리의 개미가 도는것...
@@ -505,6 +507,8 @@ class ACO:
                 best_ant_index = history_ant_index[best_index]
                 best_length = min(history_length)
                 
+            self.history_of_bestLength.append(best_length)  
+            
             
 
             #베스트 솔루션에 해당하는 페로몬을 업데이트한다.(global update)
@@ -513,11 +517,23 @@ class ACO:
             for i in range(len(list_of_cities)):    
                 list_of_cities[best_ant_index[len(list_of_cities)-1-i]].pheromone_to[best_ant[-i+len(list_of_cities)-2]] = (1-self.rho)*list_of_cities[best_ant_index[len(list_of_cities)-1-i]].pheromone_to[best_ant[-i+len(list_of_cities)-2]] + self.rho*(1/best_length)
             
-            print('\nepochs :',epoch)
+            print('\nepochs :',epoch+1)
             print('best_ant :',best_ant)    
-            print('best_length :', best_length)
+            print('best_distance :', best_length)
             
-        #최종결과 print
+            
+            
+            
+            
+            
+        # =============================================================================
+        # =============================================================================
+        # # #최종결과 & 시각화
+        # =============================================================================
+        # =============================================================================
+        
+        
+        #결과 프린트
         print("\n\n###############")            
         print("### Result! ###")
         print("###############\n")
@@ -525,20 +541,46 @@ class ACO:
         print("Initial best distance:",Initial_best_distance)
         print("Final best distance:",best_length)
         
-            
         
-               
+        
+        #시각화
+        plt.figure(figsize=(13,5))
+        
+        #시각화1. best_distacne값의 변화
+        plt.subplot(1,2,1)
+        plt.title('Change of Best Distance according to epochs')
+        plt.xlabel('Epochs')
+        plt.ylabel('Best Distance')
+        plt.plot(range(self.total_epochs), self.history_of_bestLength, c='r', label="best Distance" )
+        plt.legend(loc='upper right')
+        plt.grid(True)
+        
+        #시각화2. 최종 best_route
+        self.best_x=[]
+        self.best_y=[]
+        for i in range(len(list_of_cities)):
+            self.best_x.append(list_of_cities[best_ant_index[i]].x)
+            self.best_y.append(list_of_cities[best_ant_index[i]].y)
+        self.best_x.append(list_of_cities[best_ant_index[0]].x)
+        self.best_y.append(list_of_cities[best_ant_index[0]].y)
+
+        plt.subplot(1,2,2)
+        plt.title('Best Route')
+        for i in range(len(list_of_cities)):
+            plt.text(self.best_x[i]-np.mean(self.best_x)/30, self.best_y[i]+np.mean(self.best_y)/30, "{}".format(best_ant[i]), fontsize=10)    
+        plt.plot(self.best_x,self.best_y,c="b",
+                 lw=2, ls="-", marker="o", ms=10, mec="black", mew=1, mfc="white")
+        
+        
+            
 #실행
-ACO(number_of_CL = 10,
+ACO(number_of_CL = 15,
     num_of_ants = None,
     alpha = 1,
-    beta = 2,
+    beta = 4,
     q0 = 0.9,
     rho = 0.1,
-    total_epochs = 100)
-
-
-
+    total_epochs = 1000)
 
 
 
