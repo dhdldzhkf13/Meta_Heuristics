@@ -546,7 +546,7 @@ class ACO:
         #시각화
         plt.figure(figsize=(14,28))
         
-        #시각화1. best_distacne값의 변화
+        #시각화1. best_distacne값의 변화.
         plt.subplot(2,1,1)
         plt.title('Change of Best Distance according to epochs')
         plt.xlabel('Epochs')
