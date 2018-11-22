@@ -2,6 +2,7 @@ import numpy as np
 import csv
 import random
 import math
+import matplotlib.pyplot as plt
 
 # csv파일 이용여부를 True & False로 지정한다.
 # csv파일은 아래와 같은 포맷으로 저장되어야한다.
@@ -14,7 +15,7 @@ NodeName_3, x_3, y_3
 NodeName_n, x_n, y_n
 '''
 csv_cities = True
-csv_name = 'C:/Users/cheolhwanOh/Desktop/2018.fall/메타휴리스틱/유전알고리즘tsp/city_data.csv'
+csv_name = 'C:/python/meta_Heuristics/ALL_tsp/bayg29.csv'
 
 
 # =============================================================================
@@ -309,6 +310,12 @@ class SA:
         '''
         
         ### 멈춤규칙 : 온도 0.0001이하 ###
+        self.change_of_temperature = []
+        self.change_of_temperature.append(self.temperature)
+        
+        self.history_of_bestLength = []
+        self.history_of_bestLength.append(self.init_length)
+        
         while self.temperature > 0.0001:
             
             for banbok in range(int(self.inside_epochs)):
@@ -336,21 +343,29 @@ class SA:
             #적응적 내부루프를 epoch마다 사용하기위하여 바깥 for문마다 해당 리스트를 초기화
             self.new_length_history = []
             self.new_value_history = []
-        
+            self.change_of_temperature.append(self.temperature)
+            self.history_of_bestLength.append(self.best_solution)
+            
             #print('\nepochs :',epoch+1)
             print('\ntemperature :',self.temperature)
             print('inside_epochs :',self.inside_epochs)
             print('current_distance :',self.length)
             print('best_solution :',self.best_solution)
-        
+            
            
             
         ### 최종결과 print ###  
         self.final_route = []
+        self.best_x=[]
+        self.best_y=[]
         
         for node in self.best_value:
             next_node = self.best_value[self.best_value.index(node)-len(self.best_value)+1]
             self.final_route.append(next_node.name)
+            self.best_x.append(next_node.x)
+            self.best_y.append(next_node.y)
+        self.best_x.append(self.best_value[1].x)
+        self.best_y.append(self.best_value[1].y)
 
         print("\n\n###############")            
         print("### Result! ###")
@@ -358,8 +373,28 @@ class SA:
         print("best route:",self.final_route)
         print("Initial best distance:",self.init_length)
         print("final distacne:", self.best_solution)
-
         
+        
+        #시각화
+        plt.figure(figsize=(14,28))
+        
+        #시각화1. best_distacne값의 변화
+        plt.subplot(2,1,1)
+        plt.title('Change of Best Distance according to Temperature')
+        plt.xlabel('Temperature')
+        plt.ylabel('Best Distance')
+        plt.plot(self.change_of_temperature, self.history_of_bestLength, c='r', label="best Distance" )
+        plt.gca().invert_xaxis() #X축 반전을 위한 코드 
+        plt.legend(loc='upper right')
+        plt.grid(True)
+        
+        #시각화2. 최종 best_route
+        plt.subplot(2,1,2)
+        plt.title('Best Route')
+        for i in range(len(list_of_Nodes)):
+            plt.text(self.best_x[i]-np.mean(self.best_x)/40, self.best_y[i]+np.mean(self.best_y)/40, "{}".format(self.final_route[i]), fontsize=10)    
+        plt.plot(self.best_x,self.best_y,c="b",
+                 lw=2, ls="-", marker="o", ms=10, mec="black", mew=1, mfc="white")        
 
             
 # =============================================================================

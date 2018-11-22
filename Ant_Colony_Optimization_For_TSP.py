@@ -17,7 +17,7 @@ NodeName_3, x_3, y_3
 NodeName_n, x_n, y_n
 '''
 csv_cities = True
-csv_name = 'C:/python/meta_Heuristics/ALL_tsp/bayg29.csv'
+csv_name = 'C:/python/meta_Heuristics/ALL_tsp/st70.csv'
 
 
 #class___1, 개미 군체 최적화법을 사용하기위한 infra
@@ -507,7 +507,7 @@ class ACO:
                 best_ant_index = history_ant_index[best_index]
                 best_length = min(history_length)
                 
-            self.history_of_bestLength.append(best_length)  
+            self.history_of_bestLength.append(best_length)
             
             
 
@@ -544,10 +544,10 @@ class ACO:
         
         
         #시각화
-        plt.figure(figsize=(13,5))
+        plt.figure(figsize=(14,28))
         
         #시각화1. best_distacne값의 변화
-        plt.subplot(1,2,1)
+        plt.subplot(2,1,1)
         plt.title('Change of Best Distance according to epochs')
         plt.xlabel('Epochs')
         plt.ylabel('Best Distance')
@@ -564,10 +564,10 @@ class ACO:
         self.best_x.append(list_of_cities[best_ant_index[0]].x)
         self.best_y.append(list_of_cities[best_ant_index[0]].y)
 
-        plt.subplot(1,2,2)
+        plt.subplot(2,1,2)
         plt.title('Best Route')
         for i in range(len(list_of_cities)):
-            plt.text(self.best_x[i]-np.mean(self.best_x)/30, self.best_y[i]+np.mean(self.best_y)/30, "{}".format(best_ant[i]), fontsize=10)    
+            plt.text(self.best_x[i]-np.mean(self.best_x)/40, self.best_y[i]+np.mean(self.best_y)/40, "{}".format(best_ant[i]), fontsize=10)    
         plt.plot(self.best_x,self.best_y,c="b",
                  lw=2, ls="-", marker="o", ms=10, mec="black", mew=1, mfc="white")
         
@@ -577,10 +577,10 @@ class ACO:
 ACO(number_of_CL = 15,
     num_of_ants = None,
     alpha = 1,
-    beta = 4,
+    beta = 3,
     q0 = 0.9,
     rho = 0.1,
-    total_epochs = 1000)
+    total_epochs = 10)
 
 
 
