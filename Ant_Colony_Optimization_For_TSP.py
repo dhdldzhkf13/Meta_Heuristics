@@ -17,7 +17,7 @@ NodeName_3, x_3, y_3
 NodeName_n, x_n, y_n
 '''
 csv_cities = True
-csv_name = 'C:/python/meta_Heuristics/ALL_tsp/st70.csv'
+csv_name = 'C:/python/meta_Heuristics/ALL_tsp/pcb442.csv'
 
 
 #class___1, 개미 군체 최적화법을 사용하기위한 infra
@@ -181,6 +181,7 @@ class ACO:
                 City.set_candidata_List(city, self.number_of_CL)
                 City.set_total_candidata_list(city)
                 City.initial_pheromone(city)
+                print('node_setting... :',city.name)
                        
         
         
@@ -575,12 +576,12 @@ class ACO:
             
 #실행
 ACO(number_of_CL = 15,
-    num_of_ants = None,
+    num_of_ants = 30,
     alpha = 1,
     beta = 3,
     q0 = 0.9,
     rho = 0.1,
-    total_epochs = 10)
+    total_epochs = 1000)
 
 
 

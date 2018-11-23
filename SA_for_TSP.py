@@ -15,7 +15,7 @@ NodeName_3, x_3, y_3
 NodeName_n, x_n, y_n
 '''
 csv_cities = True
-csv_name = 'C:/python/meta_Heuristics/ALL_tsp/bayg29.csv'
+csv_name = 'C:/python/meta_Heuristics/ALL_tsp/pcb442.csv'
 
 
 # =============================================================================
@@ -129,11 +129,12 @@ class SA:
             for row in reader:
                 
                 Node(row[0],float(row[1]),float(row[2]))
-        
-                for node in list_of_Nodes:
-                    node.calculate_L2_distacne()
-                    node.set_total_candidata_list()
-        
+                
+            for node in list_of_Nodes:
+                node.calculate_L2_distacne()
+                node.set_total_candidata_list()
+                print('node_setting... :',node.name)
+                
         
         
         
