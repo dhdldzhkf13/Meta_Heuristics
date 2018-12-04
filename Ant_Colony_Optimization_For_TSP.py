@@ -17,7 +17,7 @@ NodeName_3, x_3, y_3
 NodeName_n, x_n, y_n
 '''
 csv_cities = True
-csv_name = 'C:/python/meta_Heuristics/ALL_tsp/pcb442.csv'
+csv_name = 'C:/python/meta_Heuristics/ALL_tsp/st70.csv'
 
 
 #class___1, 개미 군체 최적화법을 사용하기위한 infra
@@ -72,8 +72,8 @@ class City:
         #리턴되는 자료형은 딕셔너리형이 아닌 arg값이 각각의 tuple인 list형이다.
         candidate = sorted(self.distance_to.items(), key = operator.itemgetter(1), reverse=0)[0:number_of_CL]  
         for i in candidate:
-            #아직 모든 후보지역들은 선택되기 전이므로 False값을준다.
-            #만약 선택되었다면 그때마다 true값으로 바꿔줘야할것이다.
+            #아직 모든 후보지역들은 선택되기 전이므로 참값을준다.
+            #만약 선택되었다면 그때마다 거짓값으로 바꿔줘야할것이다.
             self.candidate[ i[0] ] = True
         del self.candidate[self.name]
         
@@ -92,6 +92,10 @@ class City:
             self.pheromone_to[city.name] = 0
         del self.pheromone_to[self.name]
    
+
+    
+    
+    
      
 
 # 실질적인 개미 군체 최적화법을 구현하는 클래스
@@ -102,7 +106,7 @@ class ACO:
                  num_of_ants = None,
                  alpha = 1,
                  beta = 2,
-                 total_epochs = 5,
+                 total_epochs = 1000,
                  rho = 0.1,
                  q0 = 0.9): 
         
@@ -573,18 +577,29 @@ class ACO:
                  lw=2, ls="-", marker="o", ms=10, mec="black", mew=1, mfc="white")
         
         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             
 #실행
-ACO(number_of_CL = 15,
-    num_of_ants = 30,
+ACO(number_of_CL = 10,
+    num_of_ants = None,
     alpha = 1,
     beta = 3,
     q0 = 0.9,
     rho = 0.1,
-    total_epochs = 1000)
-
-
-
+    total_epochs = 100)
 
 
 
