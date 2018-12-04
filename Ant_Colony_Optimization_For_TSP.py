@@ -111,8 +111,8 @@ class ACO:
                  q0 = 0.9): 
         
         
-        #set.city에서 number_of_city가 필요하기때문에
-        #number_of_city는 위에 먼저 적어준다.
+        #set.city에서 number_of_CL 필요하기때문에
+        #number_of_CL필드는 먼저 세팅.
         self.number_of_CL = number_of_CL
 
 
